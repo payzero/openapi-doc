@@ -38,7 +38,7 @@ Authorization: Bearer xxxxxxxxxxx
 |授权类型| grant_type| client_credentials| 固定类型client_credentials |
 
 * POSTMAN调用示例:
-![](access_token_img.png)
+![](resource/access_token_img.png)
 
 * response:
 
@@ -65,7 +65,7 @@ Authorization: Bearer xxxxxxxxxxx
 * Header: Bearer {{0.1a中所获取的access_token}}
 
 * POSTMAN调用示例:
-![](revoke_token.png)
+![](resource/revoke_token.png)
 
 * response: 该api返回的data为String，只需用根级别的"success" flag判定是否调用成功即可。
 
@@ -119,7 +119,7 @@ Content-Type: image/png
 ~~~ 
 
 * POSTMAN调用示例
-![](upload_image_ex.png)
+![](resource/upload_image_ex.png)
 
 #### 0.3 获取文件url####
 上传文件后，会获得文件临时访问的url和object\_id，该访问url有过期时间，一定时间后（一般情况下为1天）若想再次获得文件的访问，需通过接口请求。
@@ -265,7 +265,7 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
 合作伙伴可以根据如下所述的消息签名机制，判断消息所携带的signature是否来源于payzero。
 signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作伙伴自行保管的token(参考0.4“配置接收通知服务器”中的token参数)。SHA1的生成可参考如下代码（该代码也可向payzero技术人员索取，之后若无特殊说明，所有签名机制均和这里所述的签名机制一致)：
 
-![](sig.png)
+![](resource/sig.png)
 
 
 * method: POST
