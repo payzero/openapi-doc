@@ -4,7 +4,7 @@ Payzero has multiple APIs that form the essential building blocks of a cross-bor
 
 To describe the business flow easily, let’s define the following entities: 
 
-1.	{PAY} is a payment company who consumes Payzero OpenAPI.
+1.	{PAY} is a payment company who consumes Payzero OpenAPI. i.e. The company/org you come from.
 2.	{AP} is an account provider who has already integrated with Payzero OpenAPI and uses Payzero’s platform to manage their virtual accounts e.g. FlexWallet.
 3.	{MER} is a merchant who is the client of {PAY}, it needs virtual account for their daily business.
 4.	{X} is the entity trading with {MER}, it may be the customer of {MER}, or anyone else who needs to send funds to the bank account of {MER}.
@@ -46,7 +46,7 @@ However, just keep in mind that without the merchant and business/store being ap
 ## Step 6: Handle Incoming transaction notification
 Now you get the virtual account information from Payzero and already given it to your {MER}. It uses this account to collect money abroad.  
 
-Once there is money goes into the virtual account, Payzero will notify {AP} by sending an income transaction message. There are two different types of income transaction message. One is “pre\_income\_notify”, the other one is “actual\_income\_notify”. For normal scenarios, you should receive both “pre\_income\_notify” and “actual\_income\_notify” for each income transaction. But let’s say the merchant’s income transaction is frozen due to invalid merchant status or suspicious payers {X}, you will only receive “pre\_income\_notify” in this case. Only when the transaction is proved to be a valid incoming transaction, then you will receive the “actual\_income\_notify”.
+Once there is money goes into the virtual account, Payzero will notify {PAY} by sending an income transaction message. There are two different types of income transaction message. One is “pre\_income\_notify”, the other one is “actual\_income\_notify”. For normal scenarios, you should receive both “pre\_income\_notify” and “actual\_income\_notify” for each income transaction. But let’s say the merchant’s income transaction is frozen due to invalid merchant status or suspicious payers {X}, you will only receive “pre\_income\_notify” in this case. Only when the transaction is proved to be a valid incoming transaction, then you will receive the “actual\_income\_notify”.
 
 It’s recommended for you to only count the income transaction amount into your customer’s available balance after you receive the “actual\_income\_notify” from Payzero.
 
