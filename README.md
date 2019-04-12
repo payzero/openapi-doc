@@ -1,4 +1,8 @@
-# PayZero OpenAPI Integration Guide v1.12#
+# PayZero OpenAPI Documentation v1.12#
+
+**For understanding the whole work flow, please refer to this documentation first: [Payzero OpenAPI Cookbook](Payzero\ OpenAPI\ Cookbook.md)**
+
+**为了更好的了解业务流程，请先阅读: [Payzero OpenAPI Cookbook](Payzero\ OpenAPI\ Cookbook.md)**
 
 ### 文件修改记录 ###
 |文件版本|修改时间|修改人|修改内容|
