@@ -1,4 +1,4 @@
-# PayZero OpenAPI Documentation v1.12#
+# PayZero OpenAPI Documentation v1.12 #
 
 **For understanding the whole work flow, please refer to this documentation first: [Payzero OpenAPI Cookbook](cookbook.md)**
 
@@ -11,9 +11,11 @@
 |v1.11| 2018-11-23 | Raph| 增加了client自主revoke access_token的方法; 增加了对创建/编辑商户和店铺接口的部分说明 |
 |v1.12|2018-12-03| Raph| 交易查询接口调整，获取对账文件接口调整，文档部分用词调整等(统一调整 "技术合作伙伴/调用方/支付合作伙伴" 为 "合作伙伴") |
 
-## 技术综述##
+## 技术综述 ##
 
 PayZero OpenAPI整体采用RESTful API的风格，以json格式进行数据的传递。
+
+### 请求格式说明 ###
 
 合作伙伴需先将服务器ip提供给PayZero以确保其在api调用的白名单中(测试环境除外)，PayZero将为合作伙伴分配ClientId及ClientSecret，这些信息将在之后用于接口调用。
 
@@ -24,6 +26,8 @@ Authorization: Bearer xxxxxxxxxxx
 ~~~
 
 其中xxxxxxx为access\_token, access\_token的获得是通过调用获取access\_token接口来取得，每两个小时过期一次。
+
+### 返回值说明 ###
 
 调用接口时的返回HTTP STATUS CODE遵循HTTP返回值的通用定义，常见HTTP返回值例如:
 
