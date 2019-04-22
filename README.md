@@ -15,6 +15,9 @@
 
 PayZero OpenAPI整体采用RESTful API的风格，以json格式进行数据的传递。
 
+* 测试环境地址: https://sit-openapi.payzero.cn/api <br/>
+请使用该地址替换本文中所有出现{payzero\_api\_url}处
+
 ### 请求格式说明 ###
 
 合作伙伴需先将服务器ip提供给PayZero以确保其在api调用的白名单中(测试环境除外)，PayZero将为合作伙伴分配ClientId及ClientSecret，这些信息将在之后用于接口调用。
@@ -85,7 +88,7 @@ Authorization: Bearer xxxxxxxxxxx
 
 ### 0. 基础设施相关接口###
 #### 0.1a 获取access_token####
-* url: {payzero\_api\_url}/api/auth/oauth/token
+* url: {payzero\_api\_url}/auth/oauth/token
 * method: POST
 * Authorization: 使用Basic Authorization, 商户名为商户的clientId, 密码为商户的clientSecret
 * query parameter: 
@@ -117,7 +120,7 @@ Authorization: Bearer xxxxxxxxxxx
 #### 0.1b 主动Revoke access_token####
 由于主动调用0.1a中的方法并不会刷新access\_token，本方法提供给各合作伙伴强制revoke access\_token的方法，以已授权的access\_token作为Authorization Header中的参数并调用该方法之后，原先的access\_token将被清空。
 
-* url: {payzero\_api\_url}/api/auth/token/revoke
+* url: {payzero\_api\_url}/auth/token/revoke
 * method: GET
 * Header: Bearer {{0.1a中所获取的access_token}}
 
@@ -1095,8 +1098,9 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 ~~~
 
 ---
-### A. 附录###
-#### A.1 系统支持币种####
+### A. 附录 ###
+
+#### A.1 系统支持币种 ####
 |币种| 货币编码 |
 |:--|:--|
 |美元| USD |
