@@ -84,10 +84,10 @@ Authorization: Bearer xxxxxxxxxxx
 
 
 
-## 接口介绍##
+## 接口介绍 ##
 
-### 0. 基础设施相关接口###
-#### 0.1a 获取access_token####
+### 0. 基础设施相关接口 ###
+#### 0.1a 获取access_token ####
 * url: {payzero\_api\_url}/auth/oauth/token
 * method: POST
 * Authorization: 使用Basic Authorization, 商户名为商户的clientId, 密码为商户的clientSecret
@@ -117,7 +117,7 @@ Authorization: Bearer xxxxxxxxxxx
 }
 ~~~
 
-#### 0.1b 主动Revoke access_token####
+#### 0.1b 主动Revoke access_token ####
 由于主动调用0.1a中的方法并不会刷新access\_token，本方法提供给各合作伙伴强制revoke access\_token的方法，以已授权的access\_token作为Authorization Header中的参数并调用该方法之后，原先的access\_token将被清空。
 
 * url: {payzero\_api\_url}/auth/token/revoke
@@ -130,7 +130,7 @@ Authorization: Bearer xxxxxxxxxxx
 * response: 该api返回的data为String，只需用根级别的"success" flag判定是否调用成功即可。
 
 	
-#### 0.2 上传文件####
+#### 0.2 上传文件 ####
 上传文件为独立api，上传成功后系统将返回文件在系统中的文件id(object\_id)，本文后续多个api接口在涉及文件传输时均需提供文件id，这些id都是由文件上传接口返回，接口同时会返回该文件的临时访问的url，该url的有效期为1天。1天内可通过该url访问原文件，之后需通过object_id进行调用接口获取文件。
 
 * url: {payzero\_api\_url}/object-service/upload
@@ -181,7 +181,7 @@ Content-Type: image/png
 * POSTMAN调用示例
 ![](resource/upload_image_ex.png)
 
-#### 0.3 获取文件url####
+#### 0.3 获取文件url ####
 上传文件后，会获得文件临时访问的url和object\_id，该访问url有过期时间，一定时间后（一般情况下为1天）若想再次获得文件的访问，需通过接口请求。
 
 * url: {payzero\_api\_url}/object-service/get
@@ -215,7 +215,7 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
     }
 ~~~
 
-#### 0.4 配置接收通知服务器####
+#### 0.4 配置接收通知服务器 ####
 合作伙伴可以配置自己接收平台通知的url，和签名所需的token，是否明文发送消息等参数。若需要密文模式，可设置EncodingAESKey参数。
 
 * url: {payzero\_api\_url}/notification-service/setup
@@ -245,12 +245,12 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
 ---
 
 
-### 1. 商户创建及配置相关接口###
+### 1. 商户创建及配置相关接口 ###
 "商户"在本文中是指使用PayZero账户体系的个人或企业。
 
 商户功能相关的API提供了对商户进行操作的基本接口，合作伙伴通过对接这些接口，能够实现商户的创建、修改、查询等基本操作，以实现自身的业务逻辑。
 
-#### 1.0 获取当前合作的账户提供方####
+#### 1.0 获取当前合作的账户提供方 ####
 获取合作伙伴当前所能对接的账户提供方列表，及其所能够支持的币种、支持的商务渠道、电子商务平台等信息。
 
 * url: {payzero\_api\_url}/merchant-service/merchant/aplist
@@ -266,7 +266,7 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
 |支付平台| supp\_channel| "amazon\_us, amazon\_jp"| 该账户提供方所支持的电商平台、服务平台，以","为分隔符 |
 
 
-#### 1.1 创建/更新商户####
+#### 1.1 创建/更新商户 ####
 本接口可用于商户的创建及编辑，当请求体不包含参数"merchant\_id"时，系统判定该请求为一个创建商户的请求。当请求体包含参数"merchant\_id"时，系统判定该请求为对传入的"merchant\_id"所对应商户的一次编辑请求。
 
 * url: {payzero\_api\_url}/merchant-service/merchant
@@ -319,7 +319,7 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
 }
 ~~~
 
-#### 1.2 商户审核结果通知####
+#### 1.2 商户审核结果通知 ####
 通过该方法，Payzero发送审核结果通知给合作伙伴。请注意平台上所有的由平台推送的消息通知的格式是统一的，均包含clientId, msgType, signature, timestamp, nonce, msgBody等字段，区别在于msgBody中所含的字段不同。
 
 合作伙伴可以根据如下所述的消息签名机制，判断消息所携带的signature是否来源于payzero。
@@ -682,7 +682,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 
 
 
-#### 2.4 入账结果更新接口####
+#### 2.4 入账结果更新接口 ####
 
 <font color="red" >请注意: 本接口为特殊情况下的定制接口，若技术对接时无特别通知，无需对接本接口。</font>
 
@@ -730,7 +730,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 ~~~
 
 
-#### 2.5 创建提现申请接口####
+#### 2.5 创建提现申请接口 ####
 
 <font color="red">请注意: 若合作伙伴仅使用账户提供方的账户进行资金收集，资金收集后均由合作伙伴自行管理资金，则无需对接本接口。</font>
 
@@ -831,16 +831,16 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
   }
 ~~~
 
-#### 2.8 提现批次生成接口####
+#### 2.8 提现批次生成接口 ####
 内部用
-#### 2.9 提现批次汇率更新通知####
+#### 2.9 提现批次汇率更新通知 ####
 内部用
-#### 2.10 提现批次资金到账通知####
+#### 2.10 提现批次资金到账通知 ####
 内部用
 
 ---
-### 3. 商户查询相关接口###
-#### 3.1 商户信息查询接口####
+### 3. 商户查询相关接口 ###
+#### 3.1 商户信息查询接口 ####
 
 用于查询指定商户的详细信息
 
@@ -912,7 +912,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 }
 ~~~
 
-#### 3.2 店铺信息查询####
+#### 3.2 店铺信息查询 ####
 用于查询商户的店铺，若参数传入店铺id，则只显示该店铺的信息
 
 * url: {payzero\_api\_url}/merchant-service/merchant/store
@@ -952,7 +952,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 }
 ~~~
 
-#### 3.3 账户信息及余额查询####
+#### 3.3 账户信息及余额查询 ####
 用于查询商户的账户，若传入参数店铺id，则只显示此商户此店铺的账户信息；若参数传入账户id，则只显示该账户的信息。
 
 * url: {payzero\_api\_url}/transaction-service/account
@@ -1012,7 +1012,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
   }...]
 ~~~
 
-#### 3.4 交易记录查询####
+#### 3.4 交易记录查询 ####
 用于查询商户的账户交易记录，若参数传入账户id或交易id，则只显示该账户的交易记录信息，或某条指定的交易信息
 
 * url: {payzero\_api\_url}/transaction-service/account/transactions
@@ -1065,8 +1065,8 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 ]}
 ~~~
 ---
-### 4. 对账文件相关接口###
-#### 4.1 获取对账文件链接####
+### 4. 对账文件相关接口 ###
+#### 4.1 获取对账文件链接 ####
 用于合作伙伴获取对账文件。
 
 * url: {payzero\_api\_url}/transaction-service/recon/file
@@ -1111,7 +1111,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |澳元| AUD |
 |人民币| CNY |
 
-#### A.2 系统支持平台通道####
+#### A.2 系统支持平台通道 ####
 |通道| 通道代码 |
 |:--|:--|
 |亚马逊美国| amazon_us|
@@ -1126,14 +1126,14 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |服务贸易独立站| service_site|
 
 
-#### A.3 系统支持证件类型####
+#### A.3 系统支持证件类型 ####
 |证件类型| 证件代码 |
 |:--|:--|
 |身份证| PERSONAL_ID|
 |护照| PASSPORT|
 |营业执照| BUSINESS_LICENCE|
 
-#### A.4 国家地区代码####
+#### A.4 国家地区代码 ####
 |国家/地区| 国家/地区代码|
 |:--| :--|
 |中国| CN |
