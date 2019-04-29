@@ -1,10 +1,61 @@
-# PayZero OpenAPI Documentation v1.12 #
+# PayZero OpenAPI Documentation v1.12
 
 **For understanding the whole work flow, please refer to this documentation first: [Payzero OpenAPI Cookbook](cookbook.md)**
 
 **为了更好的了解业务流程，请先阅读: [Payzero OpenAPI Cookbook](./cookbook.md)** 
 
-### 文件修改记录 ###
+<!--ts-->
+   * [PayZero OpenAPI Documentation v1.12](#payzero-openapi-documentation-v112)
+      * [文件修改记录](#文件修改记录)
+      * [技术综述](#技术综述)
+         * [请求格式说明](#请求格式说明)
+         * [返回值说明](#返回值说明)
+      * [接口介绍](#接口介绍)
+         * [0. 基础设施相关接口](#0-基础设施相关接口)
+            * [0.1a 获取access_token](#01a-获取access_token)
+            * [0.1b 主动Revoke access_token](#01b-主动revoke-access_token)
+            * [0.2 上传文件](#02-上传文件)
+            * [0.3 获取文件url](#03-获取文件url)
+            * [0.4 配置接收通知服务器](#04-配置接收通知服务器)
+         * [1. 商户创建及配置相关接口](#1-商户创建及配置相关接口)
+            * [1.0 获取当前合作的账户提供方](#10-获取当前合作的账户提供方)
+            * [1.1 创建/更新商户](#11-创建更新商户)
+            * [1.2 商户审核结果通知](#12-商户审核结果通知)
+            * [1.3 查询可以使用的平台 (Deprecated)](#13-查询可以使用的平台-deprecated)
+            * [1.4 创建/更新店铺](#14-创建更新店铺)
+            * [1.5 店铺审核结果通知](#15-店铺审核结果通知)
+            * [1.6 分配收款账号通知](#16-分配收款账号通知)
+            * [1.7 创建/更新提现账号](#17-创建更新提现账号)
+            * [1.8 提现账号审核结果通知](#18-提现账号审核结果通知)
+         * [2. 商户提现流程相关接口](#2-商户提现流程相关接口)
+            * [2.1 预入账通知](#21-预入账通知)
+            * [2.2 实际入账通知](#22-实际入账通知)
+            * [2.3 入账失败通知####](#23-入账失败通知)
+            * [2.4 入账结果更新接口](#24-入账结果更新接口)
+            * [2.5 创建提现申请接口](#25-创建提现申请接口)
+            * [2.6 提现处理失败通知](#26-提现处理失败通知)
+            * [2.7 提现下发结果更新接口](#27-提现下发结果更新接口)
+            * [2.8 提现批次生成接口](#28-提现批次生成接口)
+            * [2.9 提现批次汇率更新通知](#29-提现批次汇率更新通知)
+            * [2.10 提现批次资金到账通知](#210-提现批次资金到账通知)
+         * [3. 商户查询相关接口](#3-商户查询相关接口)
+            * [3.1 商户信息查询接口](#31-商户信息查询接口)
+            * [3.2 店铺信息查询](#32-店铺信息查询)
+            * [3.3 账户信息及余额查询](#33-账户信息及余额查询)
+            * [3.4 交易记录查询](#34-交易记录查询)
+         * [4. 对账文件相关接口](#4-对账文件相关接口)
+            * [4.1 获取对账文件链接](#41-获取对账文件链接)
+         * [A. 附录](#a-附录)
+            * [A.1 系统支持币种](#a1-系统支持币种)
+            * [A.2 系统支持平台通道](#a2-系统支持平台通道)
+            * [A.3 系统支持证件类型](#a3-系统支持证件类型)
+            * [A.4 国家地区代码](#a4-国家地区代码)
+
+<!-- Added by: raphael, at: Mon Apr 29 21:11:58 CST 2019 -->
+
+<!--te-->
+
+## 文件修改记录
 |文件版本|修改时间|修改人|修改内容|
 |:--|:--|:--|:--|
 |v1.10| 2018-10-30| Raph| 增加1.4中关于店铺提交后，自动分配账户的场景说明；增加2.1,2.2中关于其对应未审核通过的店铺相关收款账号入账时，对应如何发送预入账与实际入账通知的说明; 修正3.4中部分typo|
@@ -338,7 +389,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |用于消息签名的随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -456,7 +507,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -483,7 +534,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -569,7 +620,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -598,7 +649,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -630,7 +681,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -663,7 +714,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
@@ -773,7 +824,7 @@ signature = SHA1.getSHA1(token, timestamp, nonce, msgBody) 其中token为合作�
 |签名| signature| | 根据平台规则对消息体内容进行加密后的签名|
 |时间戳 | timestamp | "1515601844" | |
 |随机字符串 | nonce | "123" | |
-|消息体内容| message_content| "xxxxx" | message消息体内容，nested内容参加下表|
+|消息体内容| msgBody| "xxxxx" | message消息体内容，nested内容参加下表|
 
 消息体内容:
 
