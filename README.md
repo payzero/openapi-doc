@@ -223,7 +223,7 @@ Content-Type: image/png
 	"object_id": "aa22e541-6417-4aa4-827a-8001b55c1989",
 	"object_url": "http://dev-payzero-openapi-object-bucket.oss-cn-hangzhou.aliyuncs.com/
 	aa22e541-6417-4aa4-827a-8001b55c1989.png?
-	Expires=1514355644&OSSAccessKeyId=LTAIQ7UeAsp1BUlP&
+	Expires=1514355644&OSSAccessKeyId=xxxxx&
 	Signature=kSuQDV3gordjmakCXlhCzIQnPGI%3D"
    
 }
@@ -261,7 +261,7 @@ http://127.0.0.1:16000/api/object-service/get?id=f7da2416-37bb-4d5a-a4b8-919e33a
         "object_id": "f7da2416-37bb-4d5a-a4b8-919e33aaa8e2",
         "object_url": "http://dev-payzero-openapi-object-bucket.oss-cn-hangzhou.aliyuncs.com/
         f7da2416-37bb-4d5a-a4b8-919e33aaa8e2.png?
-        Expires=1514359977&OSSAccessKeyId=LTAIQ7UeAsp1BUlP&
+        Expires=1514359977&OSSAccessKeyId=xxxxx&
         Signature=72F%2FvHf0iF3sZ%2BDpfg6pex3IcE0%3D"
     }
 ~~~
