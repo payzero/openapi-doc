@@ -1,4 +1,4 @@
-# PayZero OpenAPI Documentation v1.12
+# PayZero OpenAPI Documentation v1.12 
 
 **For understanding the whole work flow, please refer to this documentation first: [Payzero OpenAPI Cookbook](cookbook.md)**
 
